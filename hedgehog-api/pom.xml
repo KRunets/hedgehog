@@ -10,11 +10,11 @@
         <groupId>by.runets.hedgehog</groupId>
         <artifactId>by.runets.hedgehog</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>hedgehog-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-
 
 </project>

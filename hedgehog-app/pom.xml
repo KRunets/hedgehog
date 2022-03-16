@@ -10,12 +10,12 @@
         <groupId>by.runets.hedgehog</groupId>
         <artifactId>by.runets.hedgehog</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>hedgehog-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -38,6 +38,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>by.runets.hedgehog.Application</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>

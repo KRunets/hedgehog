@@ -10,6 +10,7 @@
         <groupId>by.runets.hedgehog</groupId>
         <artifactId>by.runets.hedgehog</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>hedgehog-services</artifactId>
