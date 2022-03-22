@@ -2,20 +2,24 @@ package by.runets.hedgehog.domain.template;
 
 import by.runets.hedgehog.domain.verification.VerificationType;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public final class Template implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
     private final UUID id;
     private final VerificationType type;
     private final String body;
 
     public Template(TemplateBuilder builder) {
-        this.id = builder.id;
+        this.id = UUID.randomUUID();
         this.type = builder.type;
         this.body = builder.body;
     }
@@ -46,14 +50,9 @@ public final class Template implements Serializable {
 
     public static class TemplateBuilder {
 
-        private UUID id;
         private VerificationType type;
         private String body;
 
-        public TemplateBuilder id(UUID id) {
-            this.id = id;
-            return this;
-        }
         public TemplateBuilder type(VerificationType type) {
             this.type = type;
             return this;

@@ -1,13 +1,17 @@
 package by.runets.hedgehog.domain.verification;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public final class Verification implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
     private final UUID id;
     private final Subject subject;
     private final boolean confirmed;
@@ -15,7 +19,7 @@ public final class Verification implements Serializable {
     private final UserInfo userInfo;
 
     public Verification(VerificationBuilder verificationBuilder) {
-        this.id = verificationBuilder.id;
+        this.id = UUID.randomUUID();
         this.subject = verificationBuilder.subject;
         this.confirmed = verificationBuilder.confirmed;
         this.code = verificationBuilder.code;
@@ -53,32 +57,23 @@ public final class Verification implements Serializable {
 
     public static class VerificationBuilder {
 
-        private UUID id;
         private Subject subject;
         private boolean confirmed;
         private String code;
         private UserInfo userInfo;
 
-        public VerificationBuilder id(UUID id) {
-            this.id = id;
-            return this;
-        }
-
         public VerificationBuilder subject(Subject subject) {
             this.subject = subject;
             return this;
         }
-
         public VerificationBuilder confirmed(boolean confirmed) {
             this.confirmed = confirmed;
             return this;
         }
-
         public VerificationBuilder code(String code) {
             this.code = code;
             return this;
         }
-
         public VerificationBuilder userInfo(UserInfo userInfo) {
             this.userInfo = userInfo;
             return this;

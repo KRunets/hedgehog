@@ -1,13 +1,17 @@
 package by.runets.hedgehog.domain.notification;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public final class Notification implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
     private final UUID id;
     private final String recipient;
     private final String channel;
@@ -15,7 +19,7 @@ public final class Notification implements Serializable {
     private final boolean dispatched;
 
     public Notification(NotificationBuilder builder) {
-        this.id = builder.id;
+        this.id = UUID.randomUUID();
         this.recipient = builder.recipient;
         this.channel = builder.channel;
         this.body = builder.body;
@@ -53,16 +57,11 @@ public final class Notification implements Serializable {
 
     public static class NotificationBuilder {
 
-        private UUID id;
         private String recipient;
         private String channel;
         private String body;
         private boolean dispatched;
 
-        public NotificationBuilder id(UUID id) {
-            this.id = id;
-            return this;
-        }
         public NotificationBuilder recipient(String recipient) {
             this.recipient = recipient;
             return this;
