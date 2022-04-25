@@ -4,7 +4,7 @@ MAINTAINER krunets
 
 WORKDIR /hedgehog-app
 COPY . .
-RUN mvn clean install
+RUN mvn clean install liquibase:update
 
 CMD cd hedgehog-app \
     mvn spring-boot:run

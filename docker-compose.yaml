@@ -6,6 +6,7 @@ services:
     build: ./
     ports:
       - 7771:7771
+    network_mode: "host"
   db:
     image: "postgres:${POSTGRES_VERSION}"
     volumes:
@@ -16,17 +17,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - 5432:5432
-  liquibase:
-    image: "webdevops/liquibase:postgres"
-    volumes:
-      - .:/liquibase
-    environment:
-      - LIQUIBASE_CHANGELOG=${LIQUIBASE_CHANGELOG}
-      - LIQUIBASE_URL=jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-      - LIQUIBASE_USERNAME=${POSTGRES_USER}
-      - LIQUIBASE_PASSWORD=${POSTGRES_PASSWORD}
-    depends_on:
-      - db
+    network_mode: "host"
 volumes:
   datadb:
     name: postgres-data

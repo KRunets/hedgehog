@@ -3,6 +3,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<description>Home task from Hedgehog</description>
+
+	<groupId>by.runets.hedgehog</groupId>
+	<artifactId>by.runets.hedgehog</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>HedgehogApp</name>
+	<packaging>pom</packaging>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -10,23 +18,21 @@
 		<relativePath/>
 	</parent>
 
-	<description>Home task from Hedgehog</description>
-
-	<groupId>by.runets.hedgehog</groupId>
-	<artifactId>by.runets.hedgehog</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>by.runets.hedgehog</name>
-	<packaging>pom</packaging>
-
 	<properties>
 		<java.version>11</java.version>
 		<org.postgresql.version>42.3.3</org.postgresql.version>
+		<hibernate.core.version>5.4.6.Final</hibernate.core.version>
+		<jaxb.api.version>2.4.0-b180830.0359</jaxb.api.version>
+		<liquibase.maven.plugin.version>3.9.0</liquibase.maven.plugin.version>
+		<google.guava.version>31.1-jre</google.guava.version>
+		<apache.commons.lang.version>3.12.0</apache.commons.lang.version>
 	</properties>
 
 	<modules>
-		<module>hedgehog-api</module>
-		<module>hedgehog-app</module>
-		<module>hedgehog-services</module>
+		<module>hedgehog-core-utilities</module>
+		<module>template</module>
+		<module>notification</module>
+		<module>verification</module>
 	</modules>
 
 	<dependencyManagement>
@@ -35,6 +41,16 @@
 				<groupId>org.postgresql</groupId>
 				<artifactId>postgresql</artifactId>
 				<version>${org.postgresql.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${google.guava.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${apache.commons.lang.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
