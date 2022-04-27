@@ -1,14 +1,24 @@
-package by.runets.hedgehog.domain.verification;
+package by.runets.hedgehog.domain;
 
+import org.hibernate.annotations.Type;
+
+import javax.persistence.Embeddable;
+import javax.persistence.Lob;
 import java.io.Serializable;
 import java.util.Objects;
 
-public final class UserInfo implements Serializable {
+@Embeddable
+public class UserInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final String userAgent;
-    private final String ipAddress;
+    private String userAgent;
+    @Lob
+    @Type(type = "org.hibernate.type.BinaryType")
+    private byte[] ipAddress;
+
+    public UserInfo() {
+    }
 
     public UserInfo(UserInfoBuilder builder) {
         this.userAgent = builder.userAgent;
@@ -18,7 +28,7 @@ public final class UserInfo implements Serializable {
     public String getUserAgent() {
         return userAgent;
     }
-    public String getIpAddress() {
+    public byte[] getIpAddress() {
         return ipAddress;
     }
 
@@ -38,13 +48,13 @@ public final class UserInfo implements Serializable {
     public static class UserInfoBuilder {
 
         private String userAgent;
-        private String ipAddress;
+        private byte[] ipAddress;
 
         public UserInfoBuilder userAgent(String userAgent) {
             this.userAgent = userAgent;
             return this;
         }
-        public UserInfoBuilder ipAddress(String ipAddress) {
+        public UserInfoBuilder ipAddress(byte[] ipAddress) {
             this.ipAddress = ipAddress;
             return this;
         }

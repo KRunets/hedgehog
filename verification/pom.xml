@@ -36,6 +36,15 @@
             <artifactId>postgresql</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>by.runets.hedgehog</groupId>
             <artifactId>hedgehog-core-utilities</artifactId>
             <version>0.0.1-SNAPSHOT</version>

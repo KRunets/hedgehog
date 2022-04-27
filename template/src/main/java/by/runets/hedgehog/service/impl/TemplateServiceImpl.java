@@ -8,8 +8,8 @@ import by.runets.hedgehog.service.TemplateService;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 @Service
 public class TemplateServiceImpl implements TemplateService {

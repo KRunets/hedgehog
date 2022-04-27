@@ -1,6 +1,6 @@
 package by.runets.hedgehog.validator.annotation;
 
-import by.runets.hedgehog.validator.NotEmptyCodeConstraintValidator;
+import by.runets.hedgehog.validator.SlugAllowedValuesConstraintValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,8 +11,8 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = NotEmptyCodeConstraintValidator.class)
-public @interface NotEmptyCode {
+@Constraint(validatedBy = SlugAllowedValuesConstraintValidator.class)
+public @interface ValidateSlug {
     String message() default "";
 
     Class<?>[] groups() default {};

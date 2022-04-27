@@ -1,6 +1,6 @@
 package by.runets.hedgehog.validator;
 
-import by.runets.hedgehog.validator.annotation.ValidateSlug;
+import by.runets.hedgehog.validator.annotation.ValidateConfirmationType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
@@ -8,15 +8,15 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 import java.util.List;
 
-public class SlugAllowedValuesConstraintValidator implements ConstraintValidator<ValidateSlug, String> {
+public class ConfirmationTypeValidator implements ConstraintValidator<ValidateConfirmationType, String> {
 
-    private static final List<String> SLUG_ALLOWED_VALUES = Arrays.asList("email-verification", "mobile-verification");
+    private static final List<String> CONFIRMATION_VALUES = Arrays.asList("email_confirmation", "mobile_confirmation");
 
     @Autowired
     private GenericConstraintValidator<String> genericConstraintValidator;
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        return genericConstraintValidator.isValid(value, constraintValidatorContext, val -> !SLUG_ALLOWED_VALUES.contains(val));
+        return genericConstraintValidator.isValid(value, constraintValidatorContext, val -> !CONFIRMATION_VALUES.contains(val));
     }
 }

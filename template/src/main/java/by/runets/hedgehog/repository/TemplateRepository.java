@@ -9,6 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface TemplateRepository extends CrudRepository<Template, UUID> {
-    @Query("FROM template where slug=?1")
+    @Query("FROM template WHERE slug=?1")
     Template readTemplateBySlug(String slug);
 }

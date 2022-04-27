@@ -1,13 +1,13 @@
 package by.runets.hedgehog.resource.dto;
 
 import by.runets.hedgehog.validator.annotation.NotEmptyCode;
-import by.runets.hedgehog.validator.annotation.SlugAllowedValues;
+import by.runets.hedgehog.validator.annotation.ValidateSlug;
 
 import java.util.Map;
 import java.util.Objects;
 
 public class TemplateRequestDto {
-    @SlugAllowedValues
+    @ValidateSlug
     private String slug;
     @NotEmptyCode
     private Map<String, String> variables;

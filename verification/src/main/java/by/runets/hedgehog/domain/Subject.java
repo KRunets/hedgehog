@@ -1,14 +1,19 @@
-package by.runets.hedgehog.domain.verification;
+package by.runets.hedgehog.domain;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-public final class Subject implements Serializable {
+@Embeddable
+public class Subject implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final String identity;
-    private final VerificationType type;
+    private String identity;
+    private String type;
+
+    public Subject() {
+    }
 
     public Subject(final SubjectBuilder subjectBuilder) {
         this.identity = subjectBuilder.identity;
@@ -18,7 +23,7 @@ public final class Subject implements Serializable {
     public String getIdentity() {
         return identity;
     }
-    public VerificationType getType() {
+    public String getType() {
         return type;
     }
 
@@ -38,13 +43,13 @@ public final class Subject implements Serializable {
     public static class SubjectBuilder {
 
         private String identity;
-        private VerificationType type;
+        private String type;
 
         public SubjectBuilder identity(String identity) {
             this.identity = identity;
             return this;
         }
-        public SubjectBuilder type(VerificationType type) {
+        public SubjectBuilder type(String type) {
             this.type = type;
             return this;
         }
