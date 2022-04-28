@@ -17,7 +17,7 @@ public class NotEmptyCodeConstraintValidator implements ConstraintValidator<NotE
 
     @Override
     public boolean isValid(Map<String, String> map, ConstraintValidatorContext constraintValidatorContext) {
-        return genericConstraintValidator.isValid(map, constraintValidatorContext, val -> StringUtils.isEmpty(val.get(CODE)));
+        return genericConstraintValidator.isValid(map, val -> StringUtils.isEmpty(val.get(CODE)));
     }
 
     public void setGenericConstraintValidator(GenericConstraintValidator<Map<String, String>> genericConstraintValidator) {

@@ -1,4 +1,4 @@
-package by.runets.hedgehog.resource.dto;
+package by.runets.hedgehog.event.dto;
 
 import java.util.Map;
 import java.util.Objects;
@@ -8,9 +8,9 @@ public class TemplateRequestDto {
     private String slug;
     private Map<String, String> variables;
 
-    public TemplateRequestDto(String slug, Map<String, String> variables) {
-        this.slug = slug;
-        this.variables = variables;
+    public TemplateRequestDto(TemplateRequestDtoBuilder templateRequestDtoBuilder) {
+        this.slug = templateRequestDtoBuilder.slug;
+        this.variables = templateRequestDtoBuilder.variables;
     }
 
     public String getSlug() {
@@ -40,5 +40,24 @@ public class TemplateRequestDto {
     @Override
     public int hashCode() {
         return Objects.hash(slug, variables);
+    }
+
+    public static class TemplateRequestDtoBuilder {
+
+        private String slug;
+        private Map<String, String> variables;
+
+        public TemplateRequestDtoBuilder slug(String slug) {
+            this.slug = slug;
+            return this;
+        }
+        public TemplateRequestDtoBuilder variables(Map<String, String> variables) {
+            this.variables = variables;
+            return this;
+        }
+
+        public TemplateRequestDto build() {
+            return new TemplateRequestDto(this);
+        }
     }
 }

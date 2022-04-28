@@ -4,7 +4,6 @@ import by.runets.hedgehog.exception.BadRequestException;
 import by.runets.hedgehog.exception.ResourceValidationException;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintValidatorContext;
 import java.util.function.Predicate;
 
 import static by.runets.hedgehog.utils.ErrorMessageUtils.BAD_REQUEST_ERROR_MESSAGE;
@@ -13,7 +12,7 @@ import static by.runets.hedgehog.utils.ErrorMessageUtils.VALIDATION_ERROR_MESSAG
 @Service
 public class GenericConstraintValidator<T> {
 
-    public boolean isValid(T t, ConstraintValidatorContext constraintValidatorContext, Predicate<T> predicate) {
+    public boolean isValid(T t, Predicate<T> predicate) {
         if (t == null) {
             throw new BadRequestException(BAD_REQUEST_ERROR_MESSAGE);
         }

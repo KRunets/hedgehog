@@ -17,6 +17,6 @@ public class SlugAllowedValuesConstraintValidator implements ConstraintValidator
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        return genericConstraintValidator.isValid(value, constraintValidatorContext, val -> !SLUG_ALLOWED_VALUES.contains(val));
+        return genericConstraintValidator.isValid(value, val -> !SLUG_ALLOWED_VALUES.contains(val));
     }
 }

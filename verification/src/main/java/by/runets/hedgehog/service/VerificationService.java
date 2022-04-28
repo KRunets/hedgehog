@@ -8,5 +8,5 @@ import java.util.UUID;
 public interface VerificationService {
     UUID createVerification(VerificationRequestDto verificationDto, UserInfoDto userInfoDto);
 
-    UUID confirmVerification();
+    boolean confirmVerification(UUID verificationId, String code, UserInfoDto userInfoDto);
 }

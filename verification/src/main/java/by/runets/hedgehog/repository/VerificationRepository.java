@@ -16,4 +16,8 @@ public interface VerificationRepository extends CrudRepository<Verification, UUI
     @Modifying
     @Query("UPDATE verification v SET v.expired=true WHERE v.id =?1 and expired=false")
     Integer expireVerification(UUID id);
+
+    @Modifying
+    @Query("UPDATE verification v SET v.confirmed=true WHERE v.id =?1")
+    Integer confirmVerification(UUID id);
 }

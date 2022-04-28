@@ -1,10 +1,8 @@
 package by.runets.hedgehog.domain;
 
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
 public class Subject implements Serializable {
 
     private static final long serialVersionUID = 1L;

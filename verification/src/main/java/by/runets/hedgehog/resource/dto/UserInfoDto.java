@@ -17,7 +17,6 @@ public class UserInfoDto implements Serializable {
     public String getUserAgent() {
         return userAgent;
     }
-
     public String getClientIp() {
         return clientIp;
     }

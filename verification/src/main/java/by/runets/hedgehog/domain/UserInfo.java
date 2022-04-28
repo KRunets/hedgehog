@@ -5,6 +5,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.Embeddable;
 import javax.persistence.Lob;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 
 @Embeddable
@@ -37,7 +38,7 @@ public class UserInfo implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserInfo userInfo = (UserInfo) o;
-        return Objects.equals(userAgent, userInfo.userAgent) && Objects.equals(ipAddress, userInfo.ipAddress);
+        return Objects.equals(userAgent, userInfo.userAgent) && Arrays.equals(ipAddress, userInfo.ipAddress);
     }
 
     @Override

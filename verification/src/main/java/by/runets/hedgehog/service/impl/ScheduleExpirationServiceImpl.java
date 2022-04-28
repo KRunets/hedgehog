@@ -77,9 +77,9 @@ public class ScheduleExpirationServiceImpl implements ScheduleExpirationService,
                         if (executedVerificationQueue.contains(id)) {
                             final boolean isRemoved = executedVerificationQueue.remove(id);
                             if (isRemoved) {
-                                LOG.warn("Task by id={} is cleaned", id);
                                 task.cancel();
                                 tasksForTermination.remove(id);
+                                LOG.warn("Task by id={} is cleaned", id);
                             }
                         }
                         LOG.warn("Task cleaner finished");
@@ -112,4 +112,7 @@ public class ScheduleExpirationServiceImpl implements ScheduleExpirationService,
         this.scheduledTaskRegistrar = scheduledTaskRegistrar;
     }
 
+    public void setTaskCleanerTimeout(Long taskCleanerTimeout) {
+        this.taskCleanerTimeout = taskCleanerTimeout;
+    }
 }

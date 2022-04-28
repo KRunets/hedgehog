@@ -17,6 +17,6 @@ public class ConfirmationTypeValidator implements ConstraintValidator<ValidateCo
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        return genericConstraintValidator.isValid(value, constraintValidatorContext, val -> !CONFIRMATION_VALUES.contains(val));
+        return genericConstraintValidator.isValid(value, val -> !CONFIRMATION_VALUES.contains(val));
     }
 }

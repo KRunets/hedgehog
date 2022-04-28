@@ -20,7 +20,6 @@ import java.util.concurrent.ConcurrentMap;
 @EnableScheduling
 @EnableAutoConfiguration
 public class AppConfiguration {
-
     @Bean
     public ScheduledTaskRegistrar scheduledTaskRegistrar() {
         ScheduledTaskRegistrar scheduledTaskRegistrar = new ScheduledTaskRegistrar();
@@ -44,5 +43,4 @@ public class AppConfiguration {
     public BlockingQueue<UUID> executedVerificationQueue() {
         return new ArrayBlockingQueue<>(32);
     }
-
 }

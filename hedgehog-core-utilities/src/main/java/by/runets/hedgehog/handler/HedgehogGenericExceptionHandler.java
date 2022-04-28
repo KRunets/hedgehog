@@ -33,9 +33,11 @@ public class HedgehogGenericExceptionHandler {
         STATUS_MAP.put(BadRequestException.class, HttpStatus.BAD_REQUEST);
         STATUS_MAP.put(HttpMessageNotReadableException.class, HttpStatus.BAD_REQUEST);
         STATUS_MAP.put(ResourceDuplicationException.class, HttpStatus.CONFLICT);
+        STATUS_MAP.put(NoPermissionException.class, HttpStatus.FORBIDDEN);
+        STATUS_MAP.put(ResourceExpiredException.class, HttpStatus.GONE);
     }
 
-    @ExceptionHandler({ResourceNotFoundException.class, ResourceValidationException.class, ValidationException.class, MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, ResourceDuplicationException.class})
+    @ExceptionHandler({ResourceNotFoundException.class, ResourceValidationException.class, ValidationException.class, MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, ResourceDuplicationException.class, NoPermissionException.class, ResourceExpiredException.class})
     public ResponseEntity<ErrorMessage> handleHedgehogException(Exception ex, WebRequest request) {
         final HttpStatus status = produceHttpStatus(ex);
 

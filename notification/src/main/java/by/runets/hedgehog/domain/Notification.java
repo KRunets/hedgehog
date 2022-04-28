@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "notification")
 public final class Notification implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,7 +49,6 @@ public final class Notification implements Serializable {
         Notification that = (Notification) o;
         return dispatched == that.dispatched && Objects.equals(id, that.id) && Objects.equals(recipient, that.recipient) && Objects.equals(channel, that.channel) && Objects.equals(body, that.body);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(id, recipient, channel, body, dispatched);

@@ -12,7 +12,6 @@ public class VerificationRequestDto implements Serializable {
 
     @NotEmpty
     private String identity;
-
     @NotNull
     @ValidateConfirmationType
     private String type;
