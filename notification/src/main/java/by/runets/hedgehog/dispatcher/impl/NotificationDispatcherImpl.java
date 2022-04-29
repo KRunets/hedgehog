@@ -17,7 +17,6 @@ public class NotificationDispatcherImpl implements NotificationDispatcher {
     @Transactional
     public void dispatchNotification(Notification notification) {
 
-
         notificationService.makeNotificationDispatched(notification.getId());
     }
 

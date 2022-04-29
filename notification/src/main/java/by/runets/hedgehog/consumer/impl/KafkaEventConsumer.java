@@ -1,10 +1,10 @@
-package by.runets.hedgehog.event.impl;
+package by.runets.hedgehog.consumer.impl;
 
+import by.runets.hedgehog.consumer.dto.TemplateRequestDto;
 import by.runets.hedgehog.domain.Notification;
-import by.runets.hedgehog.event.EventConsumer;
+import by.runets.hedgehog.consumer.EventConsumer;
 import by.runets.hedgehog.dispatcher.NotificationDispatcher;
 import by.runets.hedgehog.event.VerificationEvent;
-import by.runets.hedgehog.event.dto.TemplateRequestDto;
 import by.runets.hedgehog.service.NotificationService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,20 +14,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+
+import static by.runets.hedgehog.utils.Constants.CONFIRMATION_MAP;
 
 @Service
 public class KafkaEventConsumer implements EventConsumer {
 
     private static final Logger LOG = LogManager.getLogger(KafkaEventConsumer.class);
 
-    private static final String CODE = "code";
+    public static final String CODE = "code";
 
     @Value("${template.service.url}")
     private String templateServiceUrl;
@@ -41,9 +45,12 @@ public class KafkaEventConsumer implements EventConsumer {
     private NotificationDispatcher notificationDispatcher;
 
     @Override
-    @KafkaListener(topics = "VERIFICATION_TOPIC", containerFactory = "kafkaListenerContainerFactory")
-    public void consumeEvent(VerificationEvent verificationEvent) {
+    @KafkaListener(topics = "VERIFICATION_TOPIC", groupId = "VERIFICATION_GROUP", containerFactory = "kafkaListenerContainerFactory")
+    public void consumeEvent(String payload) {
+        LOG.warn("Consuming event={}", payload);
         try {
+            final VerificationEvent verificationEvent = objectMapper.readValue(payload, VerificationEvent.class);
+
             final ResponseEntity<String> templateResponseEntity = requestTemplate(verificationEvent);
             final Notification notification = buildTemplateRequestDto(verificationEvent, templateResponseEntity);
             notificationDispatcher.dispatchNotification(notification);
@@ -56,7 +63,12 @@ public class KafkaEventConsumer implements EventConsumer {
     private ResponseEntity<String> requestTemplate(VerificationEvent verificationEvent) throws JsonProcessingException {
         final TemplateRequestDto templateRequestDto = buildTemplateRequestDto(verificationEvent);
         final String json = objectMapper.writeValueAsString(templateRequestDto);
+
         final HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+        httpHeaders.add(HttpHeaders.ACCEPT_CHARSET, StandardCharsets.UTF_8.name());
+        httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+
         final HttpEntity<String> request = new HttpEntity<>(json, httpHeaders);
         return restTemplate.postForEntity(templateServiceUrl, request, String.class);
     }
@@ -73,7 +85,7 @@ public class KafkaEventConsumer implements EventConsumer {
         final Map<String, String> variables = new HashMap<>();
         variables.put(CODE, verificationEvent.getCode());
         return new TemplateRequestDto.TemplateRequestDtoBuilder()
-                .slug(verificationEvent.getSubject().getType())
+                .slug(CONFIRMATION_MAP.get(verificationEvent.getSubject().getType()))
                 .variables(variables)
                 .build();
     }

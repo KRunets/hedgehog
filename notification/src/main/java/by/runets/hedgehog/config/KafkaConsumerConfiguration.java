@@ -16,9 +16,9 @@ import java.util.HashMap;
 
 public class KafkaConsumerConfiguration {
 
-    @Value("kafka.address")
+    @Value("$kafka.address}")
     private String kafkaAddress;
-    @Value("kafka.group")
+    @Value("${kafka.group}")
     private String kafkaGroup;
 
     @Bean

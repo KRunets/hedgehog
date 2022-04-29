@@ -65,7 +65,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>by.runets.hedgehog.Application</mainClass>
+                    <mainClass>by.runets.hedgehog.TemplateApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

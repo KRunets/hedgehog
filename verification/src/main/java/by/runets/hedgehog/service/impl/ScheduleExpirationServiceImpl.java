@@ -54,7 +54,7 @@ public class ScheduleExpirationServiceImpl implements ScheduleExpirationService,
         };
 
         final TriggerTask task = new TriggerTask(() -> {
-            LOG.warn("Trigger task started.");
+            LOG.debug("Trigger task started.");
             final Integer count = expirationService.expireVerification(id);
             if (count > 0) {
                 if (!executedVerificationQueue.contains(id)) {
@@ -62,7 +62,7 @@ public class ScheduleExpirationServiceImpl implements ScheduleExpirationService,
                 }
                 LOG.warn("The verification by id={} is expired", id);
             }
-            LOG.warn("Trigger task finished.");
+            LOG.debug("Trigger task finished.");
         }, trigger);
 
         final ScheduledTask scheduledTask = scheduledTaskRegistrar.scheduleTriggerTask(task);
@@ -73,7 +73,7 @@ public class ScheduleExpirationServiceImpl implements ScheduleExpirationService,
     public void onApplicationEvent(ContextStartedEvent event) {
         final TriggerTask triggerTask = new TriggerTask(() -> {
             tasksForTermination.forEach((id, task) -> {
-                        LOG.warn("Task cleaner started");
+                        LOG.debug("Task cleaner started");
                         if (executedVerificationQueue.contains(id)) {
                             final boolean isRemoved = executedVerificationQueue.remove(id);
                             if (isRemoved) {
@@ -82,7 +82,7 @@ public class ScheduleExpirationServiceImpl implements ScheduleExpirationService,
                                 LOG.warn("Task by id={} is cleaned", id);
                             }
                         }
-                        LOG.warn("Task cleaner finished");
+                        LOG.debug("Task cleaner finished");
                     }
             );
         }, triggerContext -> {

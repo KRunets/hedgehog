@@ -1,4 +1,4 @@
-package by.runets.hedgehog.event.dto;
+package by.runets.hedgehog.consumer.dto;
 
 import java.util.Map;
 import java.util.Objects;

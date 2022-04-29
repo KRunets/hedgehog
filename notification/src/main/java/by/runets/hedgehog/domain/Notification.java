@@ -1,5 +1,7 @@
 package by.runets.hedgehog.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -7,16 +9,20 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity(name = "notification")
-public final class Notification implements Serializable {
+public class Notification implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    private final UUID id;
-    private final String recipient;
-    private final String channel;
-    private final String body;
-    private final boolean dispatched;
+    @Type(type="org.hibernate.type.UUIDCharType")
+    private UUID id;
+    private String recipient;
+    private String channel;
+    private String body;
+    private boolean dispatched;
+
+    public Notification() {
+    }
 
     public Notification(NotificationBuilder builder) {
         this.id = UUID.randomUUID();
