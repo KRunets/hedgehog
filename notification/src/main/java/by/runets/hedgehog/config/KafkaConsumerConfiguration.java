@@ -14,11 +14,14 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import java.util.HashMap;
 
+import static by.runets.hedgehog.utils.Constants.KAFKA_ADDRESS_KEY;
+import static by.runets.hedgehog.utils.Constants.KAFKA_GROUP_KEY;
+
 public class KafkaConsumerConfiguration {
 
-    @Value("$kafka.address}")
+    @Value(KAFKA_ADDRESS_KEY)
     private String kafkaAddress;
-    @Value("${kafka.group}")
+    @Value(KAFKA_GROUP_KEY)
     private String kafkaGroup;
 
     @Bean
@@ -30,9 +33,9 @@ public class KafkaConsumerConfiguration {
 
         var props = new HashMap<String, Object>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaAddress);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaGroup);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaGroup);
 
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), timestampEventDeserializer);
     }

@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Constants {
+
+    public static final String KAFKA_ADDRESS_KEY = "${kafka.address}";
+    public static final String KAFKA_GROUP_KEY = "${kafka.group}";
+    public static final String KAFKA_TOPIC_KEY = "${kafka.topic}";
+
     public static final String MOBILE_CONFIRMATION = "mobile_confirmation";
     public static final String EMAIL_CONFIRMATION = "email_confirmation";
 

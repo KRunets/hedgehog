@@ -24,7 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import static by.runets.hedgehog.utils.Constants.CONFIRMATION_MAP;
+import static by.runets.hedgehog.utils.Constants.*;
 
 @Service
 public class KafkaEventConsumer implements EventConsumer {
@@ -45,14 +45,15 @@ public class KafkaEventConsumer implements EventConsumer {
     private NotificationDispatcher notificationDispatcher;
 
     @Override
-    @KafkaListener(topics = "VERIFICATION_TOPIC", groupId = "VERIFICATION_GROUP", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = KAFKA_TOPIC_KEY, groupId = KAFKA_GROUP_KEY, containerFactory = "kafkaListenerContainerFactory")
     public void consumeEvent(String payload) {
-        LOG.warn("Consuming event={}", payload);
+        LOG.debug("Consuming event={}", payload);
         try {
             final VerificationEvent verificationEvent = objectMapper.readValue(payload, VerificationEvent.class);
 
             final ResponseEntity<String> templateResponseEntity = requestTemplate(verificationEvent);
             final Notification notification = buildTemplateRequestDto(verificationEvent, templateResponseEntity);
+
             notificationDispatcher.dispatchNotification(notification);
             notificationService.save(notification);
         } catch (JsonProcessingException e) {

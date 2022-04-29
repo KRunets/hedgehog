@@ -14,12 +14,15 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
 
+import static by.runets.hedgehog.utils.Constants.KAFKA_ADDRESS_KEY;
+import static by.runets.hedgehog.utils.Constants.KAFKA_GROUP_KEY;
+
 @Configuration
 public class KafkaConfiguration {
 
-    @Value("${kafka.address}")
+    @Value(KAFKA_ADDRESS_KEY)
     private String kafkaAddress;
-    @Value("${kafka.group}")
+    @Value(KAFKA_GROUP_KEY)
     private String kafkaGroup;
 
     @Bean

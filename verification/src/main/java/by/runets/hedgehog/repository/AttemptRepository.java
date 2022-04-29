@@ -15,5 +15,5 @@ public interface AttemptRepository extends CrudRepository<Attempt, UUID> {
 
     @Modifying
     @Query("UPDATE attempt a SET times=?2 WHERE a.verificationId=?1")
-    void writeAttempt(UUID verificationId, Integer times);
+    void incrementAttempt(UUID verificationId, Integer times);
 }

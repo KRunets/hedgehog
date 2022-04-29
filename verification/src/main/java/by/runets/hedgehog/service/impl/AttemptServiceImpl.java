@@ -34,7 +34,7 @@ public class AttemptServiceImpl implements AttemptService {
         } else {
             final AtomicInteger times = new AtomicInteger(attempt.getTimes());
             if (times.get() < VALID_ATTEMPTS_AMOUNT) {
-                attemptRepository.writeAttempt(verificationId, times.incrementAndGet());
+                attemptRepository.incrementAttempt(verificationId, times.incrementAndGet());
                 return true;
             }
         }
