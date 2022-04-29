@@ -10,7 +10,6 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - 5432:5432
-    network_mode: "host"
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
@@ -28,22 +27,6 @@ services:
         - "2181:2181"
       environment:
         - KAFKA_ADVERTISED_HOST_NAME=zookeeper
-  init-kafka:
-    image: wurstmeister/kafka
-    depends_on:
-      - kafka
-    entrypoint: [ '/bin/sh', '-c' ]
-    command: |
-      "
-      # blocks until kafka is reachable
-      kafka-topics --bootstrap-server kafka:9092 --list
-
-      echo -e 'Creating kafka topics'
-      kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic VERIFICATION_TOPIC
-
-      echo -e 'Successfully created the following topics:'
-      kafka-topics --bootstrap-server kafka:9092 --list
-      "
   mailhog:
     image: mailhog/mailhog
     container_name: 'mailhog'

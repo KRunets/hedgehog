@@ -22,6 +22,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
+    @Transactional
     public void makeNotificationDispatched(UUID id) {
         notificationRepository.makeNotificationDispatched(id);
     }

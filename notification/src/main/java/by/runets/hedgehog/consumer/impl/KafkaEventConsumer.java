@@ -52,7 +52,7 @@ public class KafkaEventConsumer implements EventConsumer {
             final VerificationEvent verificationEvent = objectMapper.readValue(payload, VerificationEvent.class);
 
             final ResponseEntity<String> templateResponseEntity = requestTemplate(verificationEvent);
-            final Notification notification = buildTemplateRequestDto(verificationEvent, templateResponseEntity);
+            final Notification notification = buildNotification(verificationEvent, templateResponseEntity);
 
             notificationDispatcher.dispatchNotification(notification);
             notificationService.save(notification);
@@ -74,10 +74,10 @@ public class KafkaEventConsumer implements EventConsumer {
         return restTemplate.postForEntity(templateServiceUrl, request, String.class);
     }
 
-    private Notification buildTemplateRequestDto(VerificationEvent verificationEvent, ResponseEntity<String> templateResponseEntity) {
+    private Notification buildNotification(VerificationEvent verificationEvent, ResponseEntity<String> templateResponseEntity) {
         return new Notification.NotificationBuilder()
                 .recipient(verificationEvent.getSubject().getIdentity())
-                .channel(verificationEvent.getSubject().getType())
+                .channel(CONFIRMATION_MAP.get(verificationEvent.getSubject().getType()))
                 .body(templateResponseEntity.getBody())
                 .build();
     }
