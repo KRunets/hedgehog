@@ -8,9 +8,9 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Map;
 
-public class NotEmptyCodeConstraintValidator implements ConstraintValidator<NotEmptyCode, Map<String, String>> {
+import static by.runets.hedgehog.utils.Constants.CODE;
 
-    private static final String CODE = "code";
+public class NotEmptyCodeConstraintValidator implements ConstraintValidator<NotEmptyCode, Map<String, String>> {
 
     @Autowired
     private GenericConstraintValidator<Map<String, String>> genericConstraintValidator;

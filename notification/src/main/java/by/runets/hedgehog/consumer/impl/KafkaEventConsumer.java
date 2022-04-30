@@ -31,8 +31,6 @@ public class KafkaEventConsumer implements EventConsumer {
 
     private static final Logger LOG = LogManager.getLogger(KafkaEventConsumer.class);
 
-    public static final String CODE = "code";
-
     @Value("${template.service.url}")
     private String templateServiceUrl;
     @Autowired
@@ -47,7 +45,7 @@ public class KafkaEventConsumer implements EventConsumer {
     @Override
     @KafkaListener(topics = KAFKA_TOPIC_KEY, groupId = KAFKA_GROUP_KEY, containerFactory = "kafkaListenerContainerFactory")
     public void consumeEvent(String payload) {
-        LOG.debug("Consuming event={}", payload);
+        LOG.warn("Consuming event={}", payload);
         try {
             final VerificationEvent verificationEvent = objectMapper.readValue(payload, VerificationEvent.class);
 

@@ -8,6 +8,9 @@ public class Constants {
     public static final String EMAIL_SENDER = "emailSender";
     public static final String MOBILE_SENDER = "mobileSender";
 
+    public static final String GOTIFY_SERVICE_URL_KEY = "${gotify.service.url}";
+    public static final String GOTIFY_SUBJECT_KEY = "${gotify.service.subject}";
+
     public static final String MAIL_HOST = "${mailhog.service.host}";
     public static final String MAIL_PORT= "#{new Integer('${mailhog.service.port}')}";
     public static final String MAIL_SUBJECT_KEY = "${mailhog.service.subject}";
@@ -25,6 +28,8 @@ public class Constants {
 
     public static final String MOBILE_VERIFICATION = "mobile-verification";
     public static final String EMAIL_VERIFICATION = "email-verification";
+
+    public static final String CODE = "code";
 
     public static final Map<String, String> CONFIRMATION_MAP = new HashMap<>();
     public static final Map<String, String> VERIFICATION_MAP = new HashMap<>();
