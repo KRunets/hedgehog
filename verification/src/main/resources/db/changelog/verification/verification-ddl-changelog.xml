@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="create-verification-table" author="k.runets">
+        <createTable tableName="verification">
+            <column name="id" type="java.sql.Types.VARCHAR(128)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="confirmed" type="boolean" defaultValue="0"/>
+            <column name="expired" type="boolean" defaultValue="0"/>
+            <column name="code" type="java.sql.Types.VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="identity" type="java.sql.Types.VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="java.sql.Types.VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_agent" type="java.sql.Types.VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ip_address" type="bytea">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-attempt-table" author="k.runets">
+        <createTable tableName="attempt">
+            <column name="id" type="java.sql.Types.VARCHAR(128)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="verification_id" type="java.sql.Types.VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_agent" type="java.sql.Types.VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ip_address" type="bytea">
+                <constraints nullable="false"/>
+            </column>
+            <column name="times" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

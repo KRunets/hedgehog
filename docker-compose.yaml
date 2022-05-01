@@ -1,0 +1,122 @@
+version: '3.4'
+services:
+  verification:
+    container_name: verification
+    image: "verification:${VERIFICATION_SERVICE_VERSION}"
+    build: verification/
+    networks:
+      - hedghog-net
+    ports:
+      - ${VERIFICATION_SERVICE_PORT}:${VERIFICATION_SERVICE_PORT}
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:${POSTGRES_PORT}/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - db
+      - kafka
+  template:
+    container_name: template
+    image: "template:${TEMPLATE_SERVICE_VERSION}"
+    networks:
+      - hedghog-net
+    ports:
+      - ${TEMPLATE_SERVICE_PORT}:${TEMPLATE_SERVICE_PORT}
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:${POSTGRES_PORT}/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - db
+  notification:
+    container_name: notification
+    image: "notification:${NOTIFICATION_SERVICE_VERSION}"
+    networks:
+      - hedghog-net
+    build: notification/
+    ports:
+      - ${NOTIFICATION_SERVICE_PORT}:${NOTIFICATION_SERVICE_PORT}
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:${POSTGRES_PORT}/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - db
+      - kafka
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    networks:
+      - hedghog-net
+    ports:
+      - ${ZOOKEEPER_PORT}:${ZOOKEEPER_PORT}
+    environment:
+      ZOOKEEPER_CLIENT_PORT: ${ZOOKEEPER_PORT}
+      ZOOKEEPER_TICK_TIME: 2000
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    networks:
+      - hedghog-net
+    restart: unless-stopped
+    depends_on:
+      - zookeeper
+    ports:
+      - ${KAFKA_PORT}:${KAFKA_PORT}
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:${ZOOKEEPER_PORT}
+      KAFKA_LISTENERS:
+        INTERNAL://kafka:${KAFKA_EXTERNAL_PORT},
+        EXTERNAL://localhost:${KAFKA_PORT}
+      KAFKA_ADVERTISED_LISTENERS:
+        INTERNAL://kafka:${KAFKA_EXTERNAL_PORT},
+        EXTERNAL://${KAFKA_PORT}:${KAFKA_PORT}
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP:
+        INTERNAL:PLAINTEXT,
+        EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_LOG_RETENTION_HOURS: 12
+  kafdrop:
+    image: obsidiandynamics/kafdrop:latest
+    networks:
+      - hedghog-net
+    depends_on:
+      - kafka
+    ports:
+      - 19000:9000
+    environment:
+      KAFKA_BROKERCONNECT: kafka:${KAFKA_EXTERNAL_PORT}
+  db:
+    image: "postgres:${POSTGRES_VERSION}"
+    networks:
+      - hedghog-net
+    volumes:
+      - datadb:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+  mailhog:
+    image: mailhog/mailhog
+    container_name: 'mailhog'
+    networks:
+      - hedghog-net
+    ports:
+      - ${MAILHOG_PORT}:${MAILHOG_PORT}
+      - ${MAILHOG_SSL_PORT}:${MAILHOG_SSL_PORT}
+  gotify:
+    image: gotify/server
+    networks:
+      - hedghog-net
+    ports:
+      - ${GOTIFY_PORT}:${GOTIFY_PORT}
+    volumes:
+      - /var/gotify/data:/app/data
+volumes:
+  datadb:
+    name: postgres-data
+networks:
+  hedghog-net:
+    driver: bridge

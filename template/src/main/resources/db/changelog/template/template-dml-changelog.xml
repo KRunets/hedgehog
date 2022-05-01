@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="email-verification-ch" author="k.runets">
+        <sql>
+            INSERT INTO template(id, slug, body) VALUES('ac92bd7e-c281-4023-96de-8f92dee73af7',
+            'email-verification',
+            '<![CDATA[ <!DOCTYPE html>
+            <html>
+                <head>
+                    <title>Email verification</title>
+                    <style>
+                        .content {
+                        margin: auto;
+                        width: 600px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="content">
+                        <p>Your verification code is {code}.</p>
+                    </div>
+                </body>
+            </html> ]]>');
+        </sql>
+    </changeSet>
+
+    <changeSet id="mobile-verification-ch" author="k.runets">
+        <sql>
+            INSERT INTO template(id, slug, body) VALUES('7441d3fb-c818-4573-9730-bdea666a2193', 'mobile-verification', 'Your verification code is {code}.');
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

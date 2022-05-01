@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="create-notification-table" author="k.runets">
+        <createTable tableName="notification">
+            <column name="id" type="java.sql.Types.VARCHAR(128)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="recipient" type="java.sql.Types.VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="channel" type="java.sql.Types.VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="body" type="java.sql.Types.VARCHAR(4096)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dispatched" type="boolean" defaultValue="0"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
