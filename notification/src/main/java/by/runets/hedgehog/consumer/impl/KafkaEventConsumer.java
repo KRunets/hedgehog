@@ -4,6 +4,7 @@ import by.runets.hedgehog.consumer.dto.TemplateRequestDto;
 import by.runets.hedgehog.domain.Notification;
 import by.runets.hedgehog.consumer.EventConsumer;
 import by.runets.hedgehog.dispatcher.NotificationDispatcher;
+import by.runets.hedgehog.event.VerificationCreatedEvent;
 import by.runets.hedgehog.event.VerificationEvent;
 import by.runets.hedgehog.service.NotificationService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -48,12 +49,13 @@ public class KafkaEventConsumer implements EventConsumer {
         LOG.warn("Consuming event={}", payload);
         try {
             final VerificationEvent verificationEvent = objectMapper.readValue(payload, VerificationEvent.class);
+            if (verificationEvent instanceof VerificationCreatedEvent) {
+                final ResponseEntity<String> templateResponseEntity = requestTemplate(verificationEvent);
+                final Notification notification = buildNotification(verificationEvent, templateResponseEntity);
 
-            final ResponseEntity<String> templateResponseEntity = requestTemplate(verificationEvent);
-            final Notification notification = buildNotification(verificationEvent, templateResponseEntity);
-
-            notificationDispatcher.dispatchNotification(notification);
-            notificationService.save(notification);
+                notificationDispatcher.dispatchNotification(notification);
+                notificationService.save(notification);
+            }
         } catch (JsonProcessingException e) {
             LOG.error("Json malformed. ", e);
         }

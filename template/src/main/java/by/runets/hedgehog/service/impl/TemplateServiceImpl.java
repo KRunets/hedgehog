@@ -10,11 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static by.runets.hedgehog.utils.Constants.CODE;
+
 
 @Service
 public class TemplateServiceImpl implements TemplateService {
 
-    private static final String CODE_KEY = "code";
     private static final String CODE_TEMPLATE = "{code}";
 
     @Autowired
@@ -33,7 +34,7 @@ public class TemplateServiceImpl implements TemplateService {
 
         String body = template.getBody();
         if (!Strings.isNullOrEmpty(body)) {
-            body = body.replace(CODE_TEMPLATE, templateRequestDto.getVariables().get(CODE_KEY));
+            body = body.replace(CODE_TEMPLATE, templateRequestDto.getVariables().get(CODE));
         }
 
         return body;

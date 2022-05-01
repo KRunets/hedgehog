@@ -24,11 +24,8 @@ public class MobileSender implements Sender {
 
     private static final Logger LOG = LogManager.getLogger(MobileSender.class);
 
-    @Value(GOTIFY_SUBJECT_KEY)
-    private String gotifyServiceSubject;
     @Value(GOTIFY_SERVICE_URL_KEY)
     private String gotifyServiceUrl;
-
     @Autowired
     private RestTemplate restTemplate;
     @Autowired
@@ -37,6 +34,7 @@ public class MobileSender implements Sender {
     @Override
     public void send(Notification notification) {
         final HttpHeaders httpHeaders = new HttpHeaders();
+
         httpHeaders.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
         httpHeaders.add(HttpHeaders.ACCEPT_CHARSET, StandardCharsets.UTF_8.name());
         httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
@@ -52,16 +50,12 @@ public class MobileSender implements Sender {
     }
 
     private Message buildMessage(Notification notification) {
-        final Message message = new Message.MessageBuilder()
+        return new Message.MessageBuilder()
                 .message(notification.getBody())
-                .title(gotifyServiceSubject)
+                .title(notification.getRecipient())
                 .build();
-        return message;
     }
 
-    public void setGotifyServiceSubject(String gotifyServiceSubject) {
-        this.gotifyServiceSubject = gotifyServiceSubject;
-    }
     public void setGotifyServiceUrl(String gotifyServiceUrl) {
         this.gotifyServiceUrl = gotifyServiceUrl;
     }

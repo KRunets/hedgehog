@@ -6,12 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
 import static by.runets.hedgehog.utils.Constants.*;
 
@@ -26,24 +23,18 @@ public class EmailSender implements Sender {
     private String from;
 
     @Autowired
-    private JavaMailSender mailSender;
+    private MailSender mailSender;
 
     @Override
     public void send(Notification notification) {
-        final MimeMessage message = mailSender.createMimeMessage();
+        final SimpleMailMessage message = new SimpleMailMessage();
 
-        try {
-            final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true);
+        message.setTo(notification.getRecipient());
+        message.setFrom(from);
+        message.setSubject(subject);
+        message.setText(notification.getBody());
 
-            mimeMessageHelper.setTo(notification.getRecipient());
-            mimeMessageHelper.setFrom(from);
-            mimeMessageHelper.setSubject(subject);
-            mimeMessageHelper.setText(notification.getBody());
-
-            mailSender.send(message);
-        } catch (MessagingException e) {
-            LOG.error("Error occurred during message sending", e);
-        }
+        mailSender.send(message);
     }
 
     public void setSubject(String subject) {
@@ -54,7 +45,7 @@ public class EmailSender implements Sender {
         this.from = from;
     }
 
-    public void setMailSender(JavaMailSender mailSender) {
+    public void setMailSender(MailSender mailSender) {
         this.mailSender = mailSender;
     }
 }

@@ -23,8 +23,10 @@ public class NotificationDispatcherImpl implements NotificationDispatcher {
     @Transactional
     public void dispatchNotification(Notification notification) {
         final Sender sender = getSender(notification.getChannel());
-        sender.send(notification);
-        notificationService.makeNotificationDispatched(notification.getId());
+        if (sender != null) {
+            sender.send(notification);
+            notificationService.makeNotificationDispatched(notification.getId());
+        }
     }
 
     private Sender getSender(String channel) {

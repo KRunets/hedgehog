@@ -9,15 +9,9 @@ public class Constants {
     public static final String MOBILE_SENDER = "mobileSender";
 
     public static final String GOTIFY_SERVICE_URL_KEY = "${gotify.service.url}";
-    public static final String GOTIFY_SUBJECT_KEY = "${gotify.service.subject}";
 
-    public static final String MAIL_HOST = "${mailhog.service.host}";
-    public static final String MAIL_PORT= "#{new Integer('${mailhog.service.port}')}";
     public static final String MAIL_SUBJECT_KEY = "${mailhog.service.subject}";
     public static final String MAIL_FROM_KEY = "${mailhog.service.from}";
-
-    public static final String MAIL_TRANSPORT_PROTOCOL = "mail.transport.protocol";
-    public static final String SMTP = "smtp";
 
     public static final String KAFKA_ADDRESS_KEY = "${kafka.address}";
     public static final String KAFKA_GROUP_KEY = "${kafka.group}";
