@@ -18,7 +18,7 @@ import static by.runets.hedgehog.utils.Constants.KAFKA_ADDRESS_KEY;
 import static by.runets.hedgehog.utils.Constants.KAFKA_GROUP_KEY;
 
 @Configuration
-public class KafkaConfiguration {
+public class KafkaProducerConfiguration {
 
     @Value(KAFKA_ADDRESS_KEY)
     private String kafkaAddress;

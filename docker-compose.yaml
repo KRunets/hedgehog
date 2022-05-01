@@ -60,16 +60,16 @@ services:
     depends_on:
       - zookeeper
     ports:
-      - ${KAFKA_INT_PORT}:${KAFKA_INT_PORT}
+      - ${KAFKA_PORT}:${KAFKA_PORT}
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:${ZOOKEEPER_PORT}
       KAFKA_LISTENERS:
         INTERNAL://kafka:${KAFKA_EXTERNAL_PORT},
-        EXTERNAL://localhost:${KAFKA_INT_PORT}
+        EXTERNAL://localhost:${KAFKA_PORT}
       KAFKA_ADVERTISED_LISTENERS:
         INTERNAL://kafka:${KAFKA_EXTERNAL_PORT},
-        EXTERNAL://${KAFKA_INT_PORT}:${KAFKA_INT_PORT}
+        EXTERNAL://${KAFKA_PORT}:${KAFKA_PORT}
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP:
         INTERNAL:PLAINTEXT,
         EXTERNAL:PLAINTEXT

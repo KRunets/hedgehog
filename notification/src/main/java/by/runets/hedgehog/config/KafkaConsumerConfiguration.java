@@ -5,6 +5,7 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
@@ -17,6 +18,7 @@ import java.util.HashMap;
 import static by.runets.hedgehog.utils.Constants.KAFKA_ADDRESS_KEY;
 import static by.runets.hedgehog.utils.Constants.KAFKA_GROUP_KEY;
 
+@Configuration
 public class KafkaConsumerConfiguration {
 
     @Value(KAFKA_ADDRESS_KEY)

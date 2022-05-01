@@ -15,8 +15,6 @@ import static by.runets.hedgehog.utils.Constants.*;
 @Service(EMAIL_SENDER)
 public class EmailSender implements Sender {
 
-    private static final Logger LOG = LogManager.getLogger(EmailSender.class);
-
     @Value(MAIL_SUBJECT_KEY)
     private String subject;
     @Value(MAIL_FROM_KEY)
