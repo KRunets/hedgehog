@@ -9,8 +9,11 @@ public class VerificationConfirmedEvent extends VerificationEvent implements Ser
 
     private static final long serialVersionUID = 1L;
 
+    public VerificationConfirmedEvent() {
+    }
+
     public VerificationConfirmedEvent(VerificationConfirmedEventBuilder verificationEventBuilder) {
-        super(verificationEventBuilder.code, verificationEventBuilder.subject, verificationEventBuilder.occurredAt);
+        super(verificationEventBuilder.code, verificationEventBuilder.subject, verificationEventBuilder.occurredAt, EventType.CONFIRMED);
     }
 
     public static class VerificationConfirmedEventBuilder {

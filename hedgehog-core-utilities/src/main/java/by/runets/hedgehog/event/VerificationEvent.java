@@ -11,6 +11,7 @@ public class VerificationEvent implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private UUID id;
+    private EventType eventType;
     private String code;
     private Subject subject;
     private Instant occurredAt;
@@ -18,8 +19,9 @@ public class VerificationEvent implements Serializable {
     public VerificationEvent() {
     }
 
-    public VerificationEvent(String code, Subject subject, Instant occurredAt) {
+    public VerificationEvent(String code, Subject subject, Instant occurredAt, EventType eventType) {
         this.id = UUID.randomUUID();
+        this.eventType = eventType;
         this.code = code;
         this.subject = subject;
         this.occurredAt = occurredAt;
@@ -36,5 +38,8 @@ public class VerificationEvent implements Serializable {
     }
     public Instant getOccurredAt() {
         return occurredAt;
+    }
+    public EventType getEventType() {
+        return eventType;
     }
 }

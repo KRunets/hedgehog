@@ -8,8 +8,11 @@ import java.time.Instant;
 public class VerificationConfirmedFailedEvent extends VerificationEvent implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    public VerificationConfirmedFailedEvent() {
+    }
+
     public VerificationConfirmedFailedEvent(VerificationConfirmedFailedEventBuilder verificationEventBuilder) {
-        super(verificationEventBuilder.code, verificationEventBuilder.subject, verificationEventBuilder.occurredAt);
+        super(verificationEventBuilder.code, verificationEventBuilder.subject, verificationEventBuilder.occurredAt, EventType.CONFIRMED_FAILED);
     }
 
     public static class VerificationConfirmedFailedEventBuilder {

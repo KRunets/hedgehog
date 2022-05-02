@@ -12,25 +12,19 @@ public class TemplateRequestDto {
     @NotEmptyCode
     private Map<String, String> variables;
 
-    public TemplateRequestDto(String slug, Map<String, String> variables) {
-        this.slug = slug;
-        this.variables = variables;
+    public TemplateRequestDto() {
+    }
+
+    public TemplateRequestDto(TemplateRequestDtoBuilder templateRequestDtoBuilder) {
+        this.slug = templateRequestDtoBuilder.slug;
+        this.variables = templateRequestDtoBuilder.variables;
     }
 
     public String getSlug() {
         return slug;
     }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
     public Map<String, String> getVariables() {
         return variables;
-    }
-
-    public void setVariables(Map<String, String> variables) {
-        this.variables = variables;
     }
 
     @Override
@@ -45,4 +39,25 @@ public class TemplateRequestDto {
     public int hashCode() {
         return Objects.hash(slug, variables);
     }
+
+    public static class TemplateRequestDtoBuilder {
+
+        private String slug;
+        private Map<String, String> variables;
+
+        public TemplateRequestDtoBuilder slug(String slug) {
+            this.slug = slug;
+            return this;
+        }
+
+        public TemplateRequestDtoBuilder variables(Map<String, String> variables) {
+            this.variables = variables;
+            return this;
+        }
+
+        public TemplateRequestDto build() {
+            return new TemplateRequestDto(this);
+        }
+    }
+
 }

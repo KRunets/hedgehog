@@ -36,11 +36,11 @@ public class VerificationRequestDto implements Serializable {
         private String identity;
         private String type;
 
-        public VerificationDtoBuilder subject(String identity) {
+        public VerificationDtoBuilder identity(String identity) {
             this.identity = identity;
             return this;
         }
-        public VerificationDtoBuilder confirmed(String type) {
+        public VerificationDtoBuilder type(String type) {
             this.type = type;
             return this;
         }
