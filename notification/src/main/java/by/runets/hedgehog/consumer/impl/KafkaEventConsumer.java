@@ -5,7 +5,6 @@ import by.runets.hedgehog.domain.Notification;
 import by.runets.hedgehog.consumer.EventConsumer;
 import by.runets.hedgehog.dispatcher.NotificationDispatcher;
 import by.runets.hedgehog.event.EventType;
-import by.runets.hedgehog.event.VerificationCreatedEvent;
 import by.runets.hedgehog.event.VerificationEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,7 +32,7 @@ public class KafkaEventConsumer implements EventConsumer {
 
     private static final Logger LOG = LogManager.getLogger(KafkaEventConsumer.class);
 
-    @Value("${template.service.url}")
+    @Value(TEMPLATE_SERVICE_URL_KEY)
     private String templateServiceUrl;
     @Autowired
     private RestTemplate restTemplate;
