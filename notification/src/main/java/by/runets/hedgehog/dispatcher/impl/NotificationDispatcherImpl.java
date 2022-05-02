@@ -23,8 +23,9 @@ public class NotificationDispatcherImpl implements NotificationDispatcher {
     @Transactional
     public void dispatchNotification(Notification notification) {
         final Sender sender = getSender(notification.getChannel());
-        if (sender != null) {
+        if (sender != null && notificationService.readNotificationById(notification.getId()).isEmpty()) {
             sender.send(notification);
+            notificationService.save(notification);
             notificationService.makeNotificationDispatched(notification.getId());
         }
     }

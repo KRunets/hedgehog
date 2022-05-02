@@ -10,7 +10,6 @@ import java.util.UUID;
 
 @Repository
 public interface NotificationRepository extends CrudRepository<Notification, UUID> {
-
     @Modifying
     @Query("UPDATE notification n SET n.dispatched=true WHERE id=?1")
     void makeNotificationDispatched(UUID notificationId);

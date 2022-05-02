@@ -4,8 +4,8 @@ import by.runets.hedgehog.consumer.dto.TemplateRequestDto;
 import by.runets.hedgehog.domain.Notification;
 import by.runets.hedgehog.consumer.EventConsumer;
 import by.runets.hedgehog.dispatcher.NotificationDispatcher;
+import by.runets.hedgehog.event.EventType;
 import by.runets.hedgehog.event.VerificationEvent;
-import by.runets.hedgehog.service.NotificationService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
@@ -31,27 +32,26 @@ public class KafkaEventConsumer implements EventConsumer {
 
     private static final Logger LOG = LogManager.getLogger(KafkaEventConsumer.class);
 
-    @Value("${template.service.url}")
+    @Value(TEMPLATE_SERVICE_URL_KEY)
     private String templateServiceUrl;
     @Autowired
     private RestTemplate restTemplate;
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    private NotificationService notificationService;
-    @Autowired
     private NotificationDispatcher notificationDispatcher;
 
     @Override
+    @Transactional
     @KafkaListener(topics = KAFKA_TOPIC_KEY, groupId = KAFKA_GROUP_KEY, containerFactory = "kafkaListenerContainerFactory")
-    public void consumeEvent(VerificationEvent verificationEvent) {
+    public void consumeVerificationCreatedEvent(VerificationEvent verificationEvent) {
         LOG.warn("Consuming event={}", verificationEvent);
         try {
-            final ResponseEntity<String> templateResponseEntity = requestTemplate(verificationEvent);
-            final Notification notification = buildNotification(verificationEvent, templateResponseEntity);
-
-            notificationDispatcher.dispatchNotification(notification);
-            notificationService.save(notification);
+            if (verificationEvent.getEventType().equals(EventType.CREATED)) {
+                final ResponseEntity<String> templateResponseEntity = requestTemplate(verificationEvent);
+                final Notification notification = buildNotification(verificationEvent, templateResponseEntity);
+                notificationDispatcher.dispatchNotification(notification);
+            }
         } catch (JsonProcessingException e) {
             LOG.error("Json malformed. ", e);
         }
@@ -95,9 +95,6 @@ public class KafkaEventConsumer implements EventConsumer {
     }
     public void setObjectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
-    }
-    public void setNotificationService(NotificationService notificationService) {
-        this.notificationService = notificationService;
     }
     public void setRestTemplate(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;

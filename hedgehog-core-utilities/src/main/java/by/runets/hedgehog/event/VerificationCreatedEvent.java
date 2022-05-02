@@ -9,8 +9,11 @@ public class VerificationCreatedEvent extends VerificationEvent implements Seria
 
     private static final long serialVersionUID = 1L;
 
+    public VerificationCreatedEvent() {
+    }
+
     public VerificationCreatedEvent(VerificationCreatedEventBuilder verificationEventBuilder) {
-        super(verificationEventBuilder.code, verificationEventBuilder.subject, verificationEventBuilder.occurredAt);
+        super(verificationEventBuilder.code, verificationEventBuilder.subject, verificationEventBuilder.occurredAt, EventType.CREATED);
     }
 
     public static class VerificationCreatedEventBuilder {

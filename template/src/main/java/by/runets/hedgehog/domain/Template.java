@@ -1,5 +1,7 @@
 package by.runets.hedgehog.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -12,6 +14,7 @@ public class Template implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Type(type="org.hibernate.type.UUIDCharType")
     private UUID id;
     private String slug;
     private String body;
